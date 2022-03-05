@@ -1,0 +1,60 @@
+{"_id":1,"title":"The Rules of the Game","directors":[1],"year":1939}
+{"_id":2,"title":"Tokyo Story","directors":[2],"year":1953}
+{"_id":3,"title":"City Lights","directors":[3],"year":1931}
+{"_id":4,"title":"Pickpocket","directors":[4],"year":1959}
+{"_id":5,"title":"Metropolis","directors":[5],"year":1927}
+{"_id":6,"title":"Citizen Kane","directors":[6],"year":1941}
+{"_id":7,"title":"Orphée","directors":[7],"year":1950}
+{"_id":8,"title":"Masculin Féminin","directors":[8],"year":1966}
+{"_id":9,"title":"Persona","directors":[9],"year":1966}
+{"_id":10,"title":"Vertigo","directors":[10],"year":1958}
+{"_id":11,"title":"Sunrise","directors":[11],"year":1927}
+{"_id":12,"title":"The Searchers","directors":[12],"year":1956}
+{"_id":13,"title":"The Lady Eve","directors":[13],"year":1941}
+{"_id":14,"title":"The Conformist","directors":[14],"year":1970}
+{"_id":15,"title":"8 ½","directors":[15],"year":1963}
+{"_id":16,"title":"The Godfather","directors":[16],"year":1972}
+{"_id":17,"title":"In the Mood for Love","directors":[17],"year":2000}
+{"_id":18,"title":"The Third Man","directors":[18],"year":1949}
+{"_id":19,"title":"Performance","directors":[19,20],"year":1970}
+{"_id":20,"title":"La Notte","directors":[21],"year":1961}
+{"_id":21,"title":"Mother and Son","directors":[22],"year":1997}
+{"_id":22,"title":"The Leopard","directors":[23],"year":1963}
+{"_id":23,"title":"The Dead","directors":[24],"year":1987}
+{"_id":24,"title":"2001: A Space Odyssey","directors":[25],"year":1968}
+{"_id":25,"title":"Last Year at Marienbad","directors":[26],"year":1961}
+{"_id":26,"title":"The Passion of Joan of Arc","directors":[27],"year":1928}
+{"_id":27,"title":"Jules and Jim","directors":[28],"year":1962}
+{"_id":28,"title":"The Wild Bunch","directors":[29],"year":1969}
+{"_id":29,"title":"All That Jazz","directors":[30],"year":1979}
+{"_id":30,"title":"The Life of Oharu","directors":[31],"year":1952}
+{"_id":31,"title":"High and Low","directors":[32],"year":1963}
+{"_id":32,"title":"Sweet Smell of Success","directors":[33],"year":1957}
+{"_id":33,"title":"That Obscure Object of Desire","directors":[34],"year":1977}
+{"_id":34,"title":"An American in Paris","directors":[35],"year":1951}
+{"_id":35,"title":"Voyage to Italy","directors":[36],"year":1954}
+{"_id":36,"title":"Taxi Driver","directors":[37],"year":1976}
+{"_id":37,"title":"Ali: Fear Eats the Soul","directors":[38],"year":1974}
+{"_id":38,"title":"Blue Velvet","directors":[39],"year":1986}
+{"_id":39,"title":"Crimes and Misdemeanors","directors":[40],"year":1989}
+{"_id":40,"title":"The Big Lebowski","directors":[41],"year":1998}
+{"_id":41,"title":"The Red Shoes","directors":[42,43],"year":1948}
+{"_id":42,"title":"Singin’ in the Rain","directors":[44,45],"year":1952}
+{"_id":43,"title":"Chinatown","directors":[46],"year":1974}
+{"_id":44,"title":"The Crowd","directors":[47],"year":1928}
+{"_id":45,"title":"Sunset Boulevard","directors":[48],"year":1950}
+{"_id":46,"title":"Talk to Her","directors":[49],"year":2002}
+{"_id":47,"title":"Shanghai Express","directors":[50],"year":1932}
+{"_id":48,"title":"Letter from an Unknown Woman","directors":[51],"year":1948}
+{"_id":49,"title":"Once Upon a Time in the West","directors":[52],"year":1968}
+{"_id":50,"title":"Salvatore Giuliano","directors":[53],"year":1962}
+{"_id":51,"title":"Nostalghia","directors":[54],"year":1983}
+{"_id":52,"title":"Seven Men From Now","directors":[55],"year":1956}
+{"_id":53,"title":"Claire’s Knee","directors":[56],"year":1970}
+{"_id":54,"title":"Earth","directors":[57],"year":1930}
+{"_id":55,"title":"Gun Crazy","directors":[58],"year":1949}
+{"_id":56,"title":"Out of the Past","directors":[59],"year":1947}
+{"_id":57,"title":"Children of Paradise","directors":[60],"year":1945}
+{"_id":58,"title":"The Naked Spur","directors":[61],"year":1953}
+{"_id":59,"title":"A Place in the Sun","directors":[62],"year":1950}
+{"_id":60,"title":"The General","directors":[63],"year":1927}
