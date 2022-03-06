@@ -1,0 +1,8 @@
+query directors ($order: [Sort!], $fields: [String!]) {
+  directors(orderBy: {order: $order, fields: $fields}) {
+    name	
+    lexKey
+    birthYear
+    deathYear
+  }
+}

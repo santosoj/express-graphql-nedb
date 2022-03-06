@@ -1,0 +1,29 @@
+query film($id: ID!) {
+  film(_id: $id) {
+    _id
+    title
+    year
+    directors {
+      name
+      lexKey
+      birthYear
+      deathYear
+    }
+    originalTitle
+    image
+    plot
+    directorsText
+    writers
+    stars
+    wikipedia {
+      plotShort {
+        plainText
+        html
+      }
+      plotFull {
+        plainText
+        html
+      }
+    }
+  }
+}

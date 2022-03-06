@@ -18,6 +18,11 @@ export default {
   module: {
     rules: [
       {
+        test: /\.(js|ts)$/,
+        exclude: /node_modules/,
+        use: [{ loader: 'babel-loader' }],
+      },
+      {
         test: /\.csv$/,
         loader: 'csv-loader',
         options: {
@@ -27,18 +32,15 @@ export default {
         },
       },
       {
-        test: /\.(graphql|gql)$/,
+        test: /\.graphql$/,
         exclude: /node_modules/,
         loader: 'graphql-tag/loader',
       },
-      {
-        test: /\.(js|ts)$/,
-        exclude: /node_modules/,
-        use: [{ loader: 'babel-loader' }],
-      },
     ],
   },
-  resolve: { extensions: ['.ts', '.js'] },
+  resolve: { 
+    extensions: ['.ts', '.js', '.graphql'],
+  },
   experiments: { outputModule: true, topLevelAwait: true },
   externalsPresets: { node: true },
   externalsType: 'node-commonjs',

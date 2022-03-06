@@ -1,0 +1,17 @@
+query director($id: ID!) {
+  director(_id: $id) {
+    _id
+    lexKey
+    birthYear
+    deathYear
+    thumbnail {
+      source
+    }
+    contentURLs {
+      desktop { page }
+      mobile { page }
+    }
+    extract
+    extractHTML
+  }
+}
