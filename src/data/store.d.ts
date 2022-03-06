@@ -8,8 +8,8 @@ export declare type PlainTextHTMLField = {
     html: string;
 };
 export interface OrderBy<T> {
-    order: ('asc' | 'desc')[];
-    fields: (keyof T & string)[];
+    order?: ('asc' | 'desc')[];
+    fields?: (keyof T & string)[];
 }
 export declare type PopulateOption<T extends {
     [key in P]: unknown[];

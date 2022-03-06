@@ -4,20 +4,20 @@ import { graphqlHTTP } from 'express-graphql'
 import { buildSchema } from 'graphql'
 
 import db, { Director, Film, OrderBy } from './data/store'
-import seed, { mergeWikipediaData, WikipediaClient } from './data/seed'
+import seed from './data/seed'
 
 import path from 'path'
 import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-await seed({
-  reset: true,
-  doMergeIMDB: true,
-  doFetchIMDB: false,
-  doMergeWikipedia: true,
-  doFetchWikipedia: false
-})
+// await seed({
+//   reset: true,
+//   doMergeIMDB: true,
+//   doFetchIMDB: false,
+//   doMergeWikipedia: true,
+//   doFetchWikipedia: false,
+// })
 
 const schema = buildSchema(`#graphql
   enum Sort {
@@ -76,12 +76,11 @@ const schema = buildSchema(`#graphql
   }
 
   input OrderByInput {
-    order: [Sort]
-    fields: [String]
+    order: [Sort!]
+    fields: [String!]
   }
 
   type Query {
-    hello: String
     directors(orderBy: OrderByInput): [Director!]!
     director(_id: ID!): Director
     films(orderBy: OrderByInput): [Film!]!
@@ -94,7 +93,6 @@ interface IDArgs {
 }
 
 const root = {
-  hello: () => 'Hello world!',
   directors: async (args?: { orderBy: OrderBy<Director> }) => {
     return await db.orderBy(db.directors.find({}), args?.orderBy)
   },

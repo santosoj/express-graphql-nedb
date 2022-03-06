@@ -9,8 +9,9 @@ import Datastore from 'nedb-promises'
 type Databases = 'directors' | 'films'
 
 const PERSISTENCE_FILE: { [name in Databases]: string } = {
-  directors: __dirname + process.env.NEDB_PERSISTENCE_DIRECTORY + '/directors.db',
-  films: __dirname + process.env.NEDB_PERSISTENCE_DIRECTORY  + '/films.db',
+  directors:
+    __dirname + process.env.NEDB_PERSISTENCE_DIRECTORY + '/directors.db',
+  films: __dirname + process.env.NEDB_PERSISTENCE_DIRECTORY + '/films.db',
 }
 
 type ArrayElement<ArrayType extends readonly unknown[]> =
@@ -21,32 +22,32 @@ export type PageURLField = {
 }
 
 export type PlainTextHTMLField = {
-  plainText: string,
+  plainText: string
   html: string
 }
 
 export interface OrderBy<T> {
-  order: ('asc' | 'desc')[]
-  fields: (keyof T & string)[]
+  order?: ('asc' | 'desc')[]
+  fields?: (keyof T & string)[]
 }
 
 export type PopulateOption<
   T extends { [key in P]: unknown[] },
   P extends keyof T
 > = {
-  prop: P,
+  prop: P
   dataStore: Datastore<Exclude<ArrayElement<T[P]>, number>>
 }
 
 export type Director = {
-  _id: number,
-  name: string,
-  lexKey: string,
-  birthYear: number,
-  deathYear?: number,
-  thumbnail?: { source: string },
+  _id: number
+  name: string
+  lexKey: string
+  birthYear: number
+  deathYear?: number
+  thumbnail?: { source: string }
   contentURLs: {
-    desktop: PageURLField,
+    desktop: PageURLField
     mobile: PageURLField
   }
   extract: string
@@ -54,24 +55,24 @@ export type Director = {
 }
 
 export type Film = {
-  _id: number,
-  title: string,
-  directors: number[] | Director[],
-  year: number,
-  imdbID: string,
-  originalTitle: string,
-  image: string,
-  plot: string,
-  directorsText: string,
-  writers: string,
-  stars: string,
+  _id: number
+  title: string
+  directors: number[] | Director[]
+  year: number
+  imdbID: string
+  originalTitle: string
+  image: string
+  plot: string
+  directorsText: string
+  writers: string
+  stars: string
   wikipedia: {
-    plotShort: PlainTextHTMLField,
+    plotShort: PlainTextHTMLField
     plotFull: PlainTextHTMLField
   }
 }
 
-type CursorType = any  // protectionist nedb-promises
+type CursorType = any // protectionist nedb-promises
 
 interface DB {
   directors: Datastore<Director>
@@ -80,8 +81,11 @@ interface DB {
   populate: <T extends { [key in P]: T[P] }, P extends keyof T>(
     target: T,
     populateOptions: PopulateOption<T, P>[]
-  ) => Promise<T>,
-  orderBy: <T, C extends CursorType>(cursor: C, orderBy?: OrderBy<T>) => Promise<C>
+  ) => Promise<T>
+  orderBy: <T, C extends CursorType>(
+    cursor: C,
+    orderBy?: OrderBy<T>
+  ) => Promise<C>
 }
 
 async function populateSingle<
@@ -105,15 +109,21 @@ async function populate<T extends { [key in P]: T[P] }, P extends keyof T>(
 }
 
 function toNeDBSortOpts<T>(orderBy: OrderBy<T>): { [key: string]: 1 | -1 } {
-  const nedbSortOpts: { [key: string]: 1 | -1 } = {}
-  for (let i = 0; i < orderBy.fields.length; i++) {
-    nedbSortOpts[orderBy.fields[i]] = orderBy.order[i] === 'asc' ? 1 : -1
+  if (orderBy.fields && orderBy.order) {
+    const nedbSortOpts: { [key: string]: 1 | -1 } = {}
+    for (let i = 0; i < orderBy.fields.length; i++) {
+      nedbSortOpts[orderBy.fields[i]] = orderBy.order[i] === 'asc' ? 1 : -1
+    }
+    return nedbSortOpts
   }
-  return nedbSortOpts
+  throw new Error('`fields` and `orders` must be defined.')
 }
 
-async function orderBy<T, C extends CursorType>(cursor: CursorType, orderBy?: OrderBy<T>): Promise<C> {
-  if (orderBy) {
+async function orderBy<T, C extends CursorType>(
+  cursor: CursorType,
+  orderBy?: OrderBy<T>
+): Promise<C> {
+  if (orderBy && orderBy.fields && orderBy.order) {
     return cursor.sort(toNeDBSortOpts(orderBy))
   }
   return cursor
@@ -140,7 +150,7 @@ const db: DB = {
   }),
   reset: resetDB,
   populate: populate,
-  orderBy: orderBy
+  orderBy: orderBy,
 }
 
 export default db

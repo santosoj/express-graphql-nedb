@@ -27,6 +27,11 @@ export default {
         },
       },
       {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader',
+      },
+      {
         test: /\.(js|ts)$/,
         exclude: /node_modules/,
         use: [{ loader: 'babel-loader' }],
@@ -36,10 +41,10 @@ export default {
   resolve: { extensions: ['.ts', '.js'] },
   experiments: { outputModule: true, topLevelAwait: true },
   externalsPresets: { node: true },
-  externalsType: 'node-commonjs',  
+  externalsType: 'node-commonjs',
   externals: [
     nodeExternals({
-      importType: 'node-commonjs'
+      importType: 'node-commonjs',
     }),
   ],
 }
