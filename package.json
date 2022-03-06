@@ -11,7 +11,7 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "webpack",
     "build:watch": "yarn run build:types --watch & yarn run build:js --watch",
-    "start": "nodemon dist/index.js"
+    "start": "nodemon --watch dist dist/index.js"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",

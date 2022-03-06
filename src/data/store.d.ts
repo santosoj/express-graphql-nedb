@@ -1,5 +1,9 @@
 import Datastore from 'nedb-promises';
 declare type ArrayElement<ArrayType extends readonly unknown[]> = ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+export declare type PlainTextHTMLField = {
+    plainText: string;
+    html: string;
+};
 export interface OrderBy<T> {
     order: ('asc' | 'desc')[];
     fields: (keyof T & string)[];
@@ -22,6 +26,17 @@ export declare type Film = {
     title: string;
     directors: number[] | Director[];
     year: number;
+    imdbID: string;
+    originalTitle: string;
+    image: string;
+    plot: string;
+    directorsText: string;
+    writers: string;
+    stars: string;
+    wikipedia: {
+        plotShort: PlainTextHTMLField;
+        plotFull: PlainTextHTMLField;
+    };
 };
 declare type CursorType = any;
 interface DB {
@@ -31,7 +46,7 @@ interface DB {
     populate: <T extends {
         [key in P]: T[P];
     }, P extends keyof T>(target: T, populateOptions: PopulateOption<T, P>[]) => Promise<T>;
-    orderBy: <T, C extends CursorType>(cursor: C, orderBy: OrderBy<T>) => Promise<C>;
+    orderBy: <T, C extends CursorType>(cursor: C, orderBy?: OrderBy<T>) => Promise<C>;
 }
 declare const db: DB;
 export default db;
