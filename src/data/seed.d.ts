@@ -40,5 +40,12 @@ export declare class WikipediaClient extends APIClient {
     summary(title: string): Promise<object | null>;
 }
 export declare function mergeWikipediaData(doFetch?: boolean): Promise<void>;
-declare function seed(reset?: boolean, doMergeIMDB?: boolean, doFetchIMDB?: boolean): Promise<void>;
+export interface SeedOptions {
+    reset: boolean;
+    doMergeIMDB: boolean;
+    doFetchIMDB: boolean;
+    doMergeWikipedia: boolean;
+    doFetchWikipedia: boolean;
+}
+declare function seed({ reset, doMergeIMDB, doFetchIMDB, doMergeWikipedia, doFetchWikipedia, }: SeedOptions): Promise<void>;
 export default seed;

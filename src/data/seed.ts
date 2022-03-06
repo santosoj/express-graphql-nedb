@@ -170,10 +170,11 @@ export async function mergeWikipediaData(doFetch: boolean = false) {
     }
     for (let directorID in json) {
       const result = json[directorID]
-      if (typeof result.content_urls?.desktop?.page !== 'string'
-        || typeof result.content_urls?.mobile?.page !== 'string'
-        || typeof result.extract !== 'string'
-        || typeof result.extract_html !== 'string'
+      if (
+        typeof result.content_urls?.desktop?.page !== 'string' ||
+        typeof result.content_urls?.mobile?.page !== 'string' ||
+        typeof result.extract !== 'string' ||
+        typeof result.extract_html !== 'string'
       ) {
         console.log(`\t${directorID} malformed.`)
       }
@@ -194,7 +195,7 @@ export async function mergeWikipediaData(doFetch: boolean = false) {
               mobile: { page: result.content_urls.mobile.page },
             },
             extract: result.extract,
-            extractHTML: result.extract_html
+            extractHTML: result.extract_html,
           },
         }
       )
@@ -208,7 +209,7 @@ async function mergeIMDBData(doFetch: boolean = false) {
   if (!process.env.NEDB_PERSISTENCE_DIRECTORY) {
     throw new Error('NEDB_PERSISTENCE_DIRECTORY missing from env.')
   }
-  
+
   const apiBase = process.env.IMDB_API_BASE
   const apiKey = process.env.IMDB_API_KEY
   let searchMovieResults: { [key: number]: object } = {}
@@ -351,11 +352,21 @@ async function mergeIMDBData(doFetch: boolean = false) {
   }
 }
 
-async function seed(
-  reset: boolean = false,
-  doMergeIMDB: boolean = false,
-  doFetchIMDB: boolean = false
-): Promise<void> {
+export interface SeedOptions {
+  reset: boolean
+  doMergeIMDB: boolean
+  doFetchIMDB: boolean
+  doMergeWikipedia: boolean
+  doFetchWikipedia: boolean
+}
+
+async function seed({
+  reset,
+  doMergeIMDB,
+  doFetchIMDB,
+  doMergeWikipedia,
+  doFetchWikipedia,
+}: SeedOptions): Promise<void> {
   if (reset) {
     await db.reset()
     console.log('Existing DB files deleted.')
@@ -384,6 +395,10 @@ async function seed(
 
   if (doMergeIMDB) {
     await mergeIMDBData(doFetchIMDB)
+  }
+
+  if (doMergeWikipedia) {
+    await mergeWikipediaData(doFetchWikipedia)
   }
 }
 

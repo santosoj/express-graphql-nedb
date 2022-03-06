@@ -11,7 +11,13 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-// await seed(true, true, false)
+await seed({
+  reset: true,
+  doMergeIMDB: true,
+  doFetchIMDB: false,
+  doMergeWikipedia: true,
+  doFetchWikipedia: false
+})
 
 const schema = buildSchema(`#graphql
   enum Sort {

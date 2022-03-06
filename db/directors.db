@@ -1,3 +1,66 @@
+{"_id":1,"name":"Jean Renoir","lexKey":"Renoir","birthYear":1894,"deathYear":1979}
+{"_id":2,"name":"Yasujiro Ozu","lexKey":"Ozu","birthYear":1903,"deathYear":1963}
+{"_id":3,"name":"Charles Chaplin","lexKey":"Chaplin","birthYear":1889,"deathYear":1977}
+{"_id":4,"name":"Robert Bresson","lexKey":"Bresson","birthYear":1901,"deathYear":1999}
+{"_id":5,"name":"Fritz Lang","lexKey":"Lang","birthYear":1890,"deathYear":1976}
+{"_id":6,"name":"Orson Welles","lexKey":"Welles","birthYear":1915,"deathYear":1985}
+{"_id":7,"name":"Jean Cocteau","lexKey":"Cocteau","birthYear":1889,"deathYear":1963}
+{"_id":8,"name":"Jean-Luc Godard","lexKey":"Godard","birthYear":1930,"deathYear":2147483647}
+{"_id":9,"name":"Ingmar Bergman","lexKey":"Bergman","birthYear":1918,"deathYear":2007}
+{"_id":10,"name":"Alfred Hitchcock","lexKey":"Hitchcock","birthYear":1899,"deathYear":1980}
+{"_id":11,"name":"F. W. Murnau","lexKey":"Murnau","birthYear":1888,"deathYear":1931}
+{"_id":12,"name":"John Ford","lexKey":"Ford","birthYear":1894,"deathYear":1973}
+{"_id":13,"name":"Preston Sturges","lexKey":"Sturges","birthYear":1898,"deathYear":1959}
+{"_id":14,"name":"Bernardo Bertolucci","lexKey":"Bertolucci","birthYear":1941,"deathYear":2018}
+{"_id":15,"name":"Federico Fellini","lexKey":"Fellini","birthYear":1920,"deathYear":1993}
+{"_id":16,"name":"Francis Coppola","lexKey":"Coppola","birthYear":1939,"deathYear":2147483647}
+{"_id":17,"name":"Wong Kar Wai","lexKey":"Wong","birthYear":1958,"deathYear":2147483647}
+{"_id":18,"name":"Carol Reed","lexKey":"Reed","birthYear":1906,"deathYear":1976}
+{"_id":19,"name":"Donald Cammell","lexKey":"Cammell","birthYear":1934,"deathYear":1996}
+{"_id":20,"name":"Nicolas Roeg","lexKey":"Roeg","birthYear":1928,"deathYear":2018}
+{"_id":21,"name":"Michelangelo Antonioni","lexKey":"Antonioni","birthYear":1912,"deathYear":2007}
+{"_id":22,"name":"Alexander Sokurov","lexKey":"Sokurov","birthYear":1951,"deathYear":2147483647}
+{"_id":23,"name":"Luchino Visconti","lexKey":"Visconti","birthYear":1906,"deathYear":1976}
+{"_id":24,"name":"John Huston","lexKey":"Huston","birthYear":1906,"deathYear":1987}
+{"_id":25,"name":"Stanley Kubrick","lexKey":"Kubrick","birthYear":1928,"deathYear":1999}
+{"_id":26,"name":"Alain Resnais","lexKey":"Resnais","birthYear":1922,"deathYear":2014}
+{"_id":27,"name":"Carl Dreyer","lexKey":"Dreyer","birthYear":1889,"deathYear":1968}
+{"_id":28,"name":"François Truffaut","lexKey":"Truffaut","birthYear":1932,"deathYear":1984}
+{"_id":29,"name":"Sam Peckinpah","lexKey":"Peckinpah","birthYear":1925,"deathYear":1984}
+{"_id":30,"name":"Bob Fosse","lexKey":"Fosse","birthYear":1927,"deathYear":1987}
+{"_id":31,"name":"Kenji Mizoguchi","lexKey":"Mizoguchi","birthYear":1898,"deathYear":1956}
+{"_id":32,"name":"Akira Kurosawa","lexKey":"Kurosawa","birthYear":1910,"deathYear":1998}
+{"_id":33,"name":"Alexander Mackendrick","lexKey":"Mackendrick","birthYear":1912,"deathYear":1993}
+{"_id":34,"name":"Luis Buñuel","lexKey":"Buñuel","birthYear":1900,"deathYear":1983}
+{"_id":35,"name":"Vincente Minnelli","lexKey":"Minnelli","birthYear":1903,"deathYear":1986}
+{"_id":36,"name":"Roberto Rossellini","lexKey":"Rossellini","birthYear":1906,"deathYear":1977}
+{"_id":37,"name":"Martin Scorsese","lexKey":"Scorsese","birthYear":1942,"deathYear":2147483647}
+{"_id":38,"name":"Rainer Werner Fassbinder","lexKey":"Fassbinder","birthYear":1945,"deathYear":1982}
+{"_id":39,"name":"David Lynch","lexKey":"Lynch","birthYear":1946,"deathYear":2147483647}
+{"_id":40,"name":"Woody Allen","lexKey":"Allen","birthYear":1935,"deathYear":2147483647}
+{"_id":41,"name":"Joel Coen","lexKey":"Coen","birthYear":1954,"deathYear":2147483647}
+{"_id":42,"name":"Michael Powell","lexKey":"Powell","birthYear":1905,"deathYear":1990}
+{"_id":43,"name":"Emeric Pressburger","lexKey":"Pressburger","birthYear":1902,"deathYear":1988}
+{"_id":44,"name":"Stanley Donen","lexKey":"Donen","birthYear":1924,"deathYear":2019}
+{"_id":45,"name":"Gene Kelly","lexKey":"Kelly","birthYear":1912,"deathYear":1996}
+{"_id":46,"name":"Roman Polanski","lexKey":"Polanski","birthYear":1933,"deathYear":2147483647}
+{"_id":47,"name":"King Vidor","lexKey":"Vidor","birthYear":1894,"deathYear":1982}
+{"_id":48,"name":"Billy Wilder","lexKey":"Wilder","birthYear":1906,"deathYear":2002}
+{"_id":49,"name":"Pedro Almodóvar","lexKey":"Almodóvar","birthYear":1949,"deathYear":2147483647}
+{"_id":50,"name":"Josef von Sternberg","lexKey":"Sternberg","birthYear":1894,"deathYear":1969}
+{"_id":51,"name":"Max Ophüls","lexKey":"Ophüls","birthYear":1902,"deathYear":1957}
+{"_id":52,"name":"Sergio Leone","lexKey":"Leone","birthYear":1929,"deathYear":1989}
+{"_id":53,"name":"Francesco Rosi","lexKey":"Rosi","birthYear":1922,"deathYear":2015}
+{"_id":54,"name":"Andrei Tarkovsky","lexKey":"Tarkovsky","birthYear":1932,"deathYear":1986}
+{"_id":55,"name":"Budd Boetticher","lexKey":"Boetticher","birthYear":1916,"deathYear":2001}
+{"_id":56,"name":"Eric Rohmer","lexKey":"Rohmer","birthYear":1920,"deathYear":2010}
+{"_id":57,"name":"Alexander Dovzhenko","lexKey":"Dovzhenko","birthYear":1894,"deathYear":1956}
+{"_id":58,"name":"Joseph H. Lewis","lexKey":"Lewis","birthYear":1907,"deathYear":2000}
+{"_id":59,"name":"Jacques Tourneur","lexKey":"Tourneur","birthYear":1904,"deathYear":1977}
+{"_id":60,"name":"Marcel Carné","lexKey":"Carné","birthYear":1906,"deathYear":1966}
+{"_id":61,"name":"Anthony Mann","lexKey":"Mann","birthYear":1906,"deathYear":1967}
+{"_id":62,"name":"George Stevens","lexKey":"Stevens","birthYear":1904,"deathYear":1975}
+{"_id":63,"name":"Buster Keaton","lexKey":"Keaton","birthYear":1895,"deathYear":1966}
 {"_id":1,"name":"Jean Renoir","lexKey":"Renoir","birthYear":1894,"deathYear":1979,"thumbnail":{"source":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Jean_Renoir_%281959%29.tif/lossy-page1-222px-Jean_Renoir_%281959%29.tif.jpg","width":222,"height":320},"contentURLs":{"desktop":{"page":"https://en.wikipedia.org/wiki/Jean_Renoir"},"mobile":{"page":"https://en.m.wikipedia.org/wiki/Jean_Renoir"}},"extract":"Jean Renoir was a French film director, screenwriter, actor, producer and author. As a film director and actor, he made more than forty films from the silent era to the end of the 1960s. His films La Grande Illusion (1937) and The Rules of the Game (1939) are often cited by critics as among the greatest films ever made. He was ranked by the BFI's Sight & Sound poll of critics in 2002 as the fourth greatest director of all time. Among numerous honours accrued during his lifetime, he received a Lifetime Achievement Academy Award in 1975 for his contribution to the motion picture industry. Renoir was the son of the painter Pierre-Auguste Renoir. He was one of the first filmmakers to be known as an auteur.","extractHTML":"<p><b>Jean Renoir</b> was a French film director, screenwriter, actor, producer and author. As a film director and actor, he made more than forty films from the silent era to the end of the 1960s. His films <i>La Grande Illusion</i> (1937) and <i>The Rules of the Game</i> (1939) are often cited by critics as among the greatest films ever made. He was ranked by the BFI's <i>Sight &amp; Sound</i> poll of critics in 2002 as the fourth greatest director of all time. Among numerous honours accrued during his lifetime, he received a Lifetime Achievement Academy Award in 1975 for his contribution to the motion picture industry. Renoir was the son of the painter Pierre-Auguste Renoir. He was one of the first filmmakers to be known as an <i>auteur</i>.</p>"}
 {"_id":2,"name":"Yasujiro Ozu","lexKey":"Ozu","birthYear":1903,"deathYear":1963,"thumbnail":{"source":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Yasujiro_Ozu_01.jpg/267px-Yasujiro_Ozu_01.jpg","width":267,"height":320},"contentURLs":{"desktop":{"page":"https://en.wikipedia.org/wiki/Yasujir%C5%8D_Ozu"},"mobile":{"page":"https://en.m.wikipedia.org/wiki/Yasujir%C5%8D_Ozu"}},"extract":"Yasujirō Ozu  was a Japanese film director and screenwriter. He began his career during the era of silent films, and his last films were made in colour in the early 1960s. Ozu first made a number of short comedies, before turning to more serious themes in the 1930s.\nThe most prominent themes of Ozu's work are marriage and family, especially the relationships between generations. His most widely beloved films include Late Spring (1949), Tokyo Story (1953), and An Autumn Afternoon (1962).","extractHTML":"<p><b>Yasujirō Ozu</b><span style=\"font-weight:normal\"> </span> was a Japanese film director and screenwriter. He began his career during the era of silent films, and his last films were made in colour in the early 1960s. Ozu first made a number of short comedies, before turning to more serious themes in the 1930s.\nThe most prominent themes of Ozu's work are marriage and family, especially the relationships between generations. His most widely beloved films include <i>Late Spring</i> (1949), <i>Tokyo Story</i> (1953), and <i>An Autumn Afternoon</i> (1962).</p>"}
 {"_id":3,"name":"Charles Chaplin","lexKey":"Chaplin","birthYear":1889,"deathYear":1977,"thumbnail":{"source":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Charlie_Chaplin_portrait.jpg/240px-Charlie_Chaplin_portrait.jpg","width":240,"height":320},"contentURLs":{"desktop":{"page":"https://en.wikipedia.org/wiki/Charlie_Chaplin"},"mobile":{"page":"https://en.m.wikipedia.org/wiki/Charlie_Chaplin"}},"extract":"Sir Charles Spencer Chaplin Jr. was an English comic actor, filmmaker, and composer who rose to fame in the era of silent film. He became a worldwide icon through his screen persona, the Tramp, and is considered one of the film industry's most important figures. His career spanned more than 75 years, from childhood in the Victorian Era until a year before his death in 1977, and encompassed both adulation and controversy.","extractHTML":"<p><b>Sir Charles Spencer Chaplin Jr.</b> was an English comic actor, filmmaker, and composer who rose to fame in the era of silent film. He became a worldwide icon through his screen persona, the Tramp, and is considered one of the film industry's most important figures. His career spanned more than 75 years, from childhood in the Victorian Era until a year before his death in 1977, and encompassed both adulation and controversy.</p>"}
