@@ -1,5 +1,8 @@
 import Datastore from 'nedb-promises';
 declare type ArrayElement<ArrayType extends readonly unknown[]> = ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+export declare type PageURLField = {
+    page: string;
+};
 export declare type PlainTextHTMLField = {
     plainText: string;
     html: string;
@@ -20,6 +23,15 @@ export declare type Director = {
     lexKey: string;
     birthYear: number;
     deathYear?: number;
+    thumbnail?: {
+        source: string;
+    };
+    contentURLs: {
+        desktop: PageURLField;
+        mobile: PageURLField;
+    };
+    extract: string;
+    extractHTML: string;
 };
 export declare type Film = {
     _id: number;

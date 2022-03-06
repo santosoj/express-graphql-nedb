@@ -16,6 +16,10 @@ const PERSISTENCE_FILE: { [name in Databases]: string } = {
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never
 
+export type PageURLField = {
+  page: string
+}
+
 export type PlainTextHTMLField = {
   plainText: string,
   html: string
@@ -39,7 +43,14 @@ export type Director = {
   name: string,
   lexKey: string,
   birthYear: number,
-  deathYear?: number
+  deathYear?: number,
+  thumbnail?: { source: string },
+  contentURLs: {
+    desktop: PageURLField,
+    mobile: PageURLField
+  }
+  extract: string
+  extractHTML: string
 }
 
 export type Film = {

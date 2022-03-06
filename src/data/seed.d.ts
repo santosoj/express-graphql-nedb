@@ -21,17 +21,24 @@ interface TitleData {
         plotFull: PlainTextHTMLField;
     };
 }
-export declare class IMDBClient {
+declare class APIClient {
     private baseURL;
-    private apiKey;
     axios: AxiosInstance;
     defaultNumRequests: number;
     defaultRetryDelay: number;
-    constructor(baseURL: string, apiKey: string);
+    constructor(baseURL: string);
     requestRetry<T>(path: string, numRequests?: number, retryDelay?: number): Promise<AxiosResponse<T, any>>;
     fetchData<T>(path: string): Promise<T | null>;
+}
+export declare class IMDBClient extends APIClient {
+    private apiKey;
+    constructor(baseURL: string, apiKey: string);
     searchMovie(searchString: string): Promise<SearchMovieData | null>;
     title(id: string): Promise<TitleData | null>;
 }
+export declare class WikipediaClient extends APIClient {
+    summary(title: string): Promise<object | null>;
+}
+export declare function mergeWikipediaData(doFetch?: boolean): Promise<void>;
 declare function seed(reset?: boolean, doMergeIMDB?: boolean, doFetchIMDB?: boolean): Promise<void>;
 export default seed;

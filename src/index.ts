@@ -4,7 +4,7 @@ import { graphqlHTTP } from 'express-graphql'
 import { buildSchema } from 'graphql'
 
 import db, { Director, Film, OrderBy } from './data/store'
-import seed from './data/seed'
+import seed, { mergeWikipediaData, WikipediaClient } from './data/seed'
 
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -19,9 +19,22 @@ const schema = buildSchema(`#graphql
     desc
   }
 
-  input OrderByInput {
-    order: [Sort]
-    fields: [String]
+  type PageURLField {
+    page: String!
+  }
+
+  type PlainTextHTMLField {
+    plainText: String!
+    html: String!
+  }
+
+  type Thumbnail {
+    source: String!
+  }
+
+  type ContentURLs {
+    desktop: PageURLField
+    mobile: PageURLField
   }
 
   type Director {
@@ -30,11 +43,10 @@ const schema = buildSchema(`#graphql
     lexKey: String!
     birthYear: Int!
     deathYear: Int
-  }
-
-  type PlainTextHTMLField {
-    plainText: String!
-    html: String!
+    thumbnail: Thumbnail
+    contentURLs: ContentURLs!
+    extract: String!
+    extractHTML: String!
   }
 
   type FilmWikipediaSection {
@@ -57,18 +69,31 @@ const schema = buildSchema(`#graphql
     wikipedia: FilmWikipediaSection!
   }
 
+  input OrderByInput {
+    order: [Sort]
+    fields: [String]
+  }
+
   type Query {
     hello: String
     directors(orderBy: OrderByInput): [Director!]!
+    director(_id: ID!): Director
     films(orderBy: OrderByInput): [Film!]!
     film(_id: ID!): Film
   }
 `)
 
+interface IDArgs {
+  _id: string
+}
+
 const root = {
   hello: () => 'Hello world!',
   directors: async (args?: { orderBy: OrderBy<Director> }) => {
     return await db.orderBy(db.directors.find({}), args?.orderBy)
+  },
+  director: async ({ _id }: IDArgs) => {
+    return await db.directors.findOne({ _id: Number(_id) })
   },
   films: async (args?: { orderBy: OrderBy<Film> }) => {
     const films = await db.orderBy(db.films.find({}), args?.orderBy)
@@ -76,7 +101,7 @@ const root = {
       db.populate(f, [{ prop: 'directors', dataStore: db.directors }])
     )
   },
-  film: async ({ _id }: { _id: string }) => {
+  film: async ({ _id }: IDArgs) => {
     const film = await db.films.findOne({ _id: Number(_id) })
     if (film) {
       return await db.populate(film, [

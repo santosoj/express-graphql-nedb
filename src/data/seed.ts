@@ -5,7 +5,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 import Axios, { AxiosInstance, AxiosResponse } from 'axios'
-import db, { Director, Film, PlainTextHTMLField } from './store'
+import db, { Director, Film, PageURLField, PlainTextHTMLField } from './store'
 
 const MAXINT32 = 0x7fffffff
 
@@ -32,12 +32,24 @@ interface TitleData {
   }
 }
 
-export class IMDBClient {
+interface SummaryData {
+  thumbnail?: {
+    source: string
+  }
+  content_urls: {
+    desktop: PageURLField
+    mobile: PageURLField
+  }
+  extract: string
+  extract_html: string
+}
+
+class APIClient {
   axios: AxiosInstance
   defaultNumRequests: number
   defaultRetryDelay: number
 
-  constructor(private baseURL: string, private apiKey: string) {
+  constructor(private baseURL: string) {
     this.axios = Axios.create({
       baseURL: baseURL,
       timeout: 10_000,
@@ -71,11 +83,21 @@ export class IMDBClient {
   async fetchData<T>(path: string): Promise<T | null> {
     try {
       const res = await this.requestRetry<T>(path)
-      return res.data
+      if (res.status === 200) {
+        return res.data
+      }
+      console.log(`response.status=${res.status} (${res.statusText})`)
+      return null
     } catch (ex) {
       console.log(ex)
       return null
     }
+  }
+}
+
+export class IMDBClient extends APIClient {
+  constructor(baseURL: string, private apiKey: string) {
+    super(baseURL)
   }
 
   async searchMovie(searchString: string): Promise<SearchMovieData | null> {
@@ -89,14 +111,110 @@ export class IMDBClient {
   }
 }
 
+export class WikipediaClient extends APIClient {
+  async summary(title: string): Promise<object | null> {
+    return await this.fetchData(`/page/summary/${encodeURIComponent(title)}`)
+  }
+}
+
+export async function mergeWikipediaData(doFetch: boolean = false) {
+  if (!process.env.NEDB_PERSISTENCE_DIRECTORY) {
+    throw new Error('NEDB_PERSISTENCE_DIRECTORY missing from env.')
+  }
+
+  const apiBase = process.env.WIKIPEDIA_API_BASE
+  let summaryResults: { [key: number]: object } = {}
+  if (apiBase) {
+    const client = new WikipediaClient(apiBase)
+    const directors: Director[] = await db.directors.find({})
+
+    // Fetch Summary data.
+    //
+    if (doFetch) {
+      console.log('Fetching Summary data...')
+      for (let director of directors) {
+        try {
+          const result = await client.summary(`${director.name}`)
+          if (result) {
+            summaryResults[director._id] = result
+          }
+        } catch (ex) {
+          console.log(ex)
+        }
+      }
+      fs.writeFileSync(
+        __dirname +
+          process.env.NEDB_PERSISTENCE_DIRECTORY +
+          '/summaryResults.json',
+        JSON.stringify(summaryResults)
+      )
+    }
+
+    let json = JSON.parse(
+      fs
+        .readFileSync(
+          __dirname +
+            process.env.NEDB_PERSISTENCE_DIRECTORY +
+            '/summaryResults.json'
+        )
+        .toString('utf-8')
+    )
+
+    // Flag incorrect results.
+    //
+    console.log('Summary data flagged as incorrect:')
+    for (let director of directors) {
+      if (!json.hasOwnProperty(director._id)) {
+        console.log(`\t${director._id} missing.`)
+      }
+    }
+    for (let directorID in json) {
+      const result = json[directorID]
+      if (typeof result.content_urls?.desktop?.page !== 'string'
+        || typeof result.content_urls?.mobile?.page !== 'string'
+        || typeof result.extract !== 'string'
+        || typeof result.extract_html !== 'string'
+      ) {
+        console.log(`\t${directorID} malformed.`)
+      }
+    }
+    console.log('\t(END)\n')
+
+    // Update DB with Wikipedia Summary data.
+    //
+    for (let directorID in json) {
+      const result = json[directorID]
+      await db.directors.update(
+        { _id: Number(directorID) },
+        {
+          $set: {
+            thumbnail: result.thumbnail,
+            contentURLs: {
+              desktop: { page: result.content_urls.desktop.page },
+              mobile: { page: result.content_urls.mobile.page },
+            },
+            extract: result.extract,
+            extractHTML: result.extract_html
+          },
+        }
+      )
+    }
+  } else {
+    throw new Error('WIKIPEDIA_API_BASE missing from env.')
+  }
+}
+
 async function mergeIMDBData(doFetch: boolean = false) {
+  if (!process.env.NEDB_PERSISTENCE_DIRECTORY) {
+    throw new Error('NEDB_PERSISTENCE_DIRECTORY missing from env.')
+  }
+  
   const apiBase = process.env.IMDB_API_BASE
   const apiKey = process.env.IMDB_API_KEY
-  let client: IMDBClient
   let searchMovieResults: { [key: number]: object } = {}
   let titleResults: { [key: number]: object } = {}
   if (apiBase && apiKey) {
-    client = new IMDBClient(apiBase, apiKey)
+    const client = new IMDBClient(apiBase, apiKey)
     const films: Film[] = await db.films.find({})
 
     // Fetch SearchMovie data.
@@ -186,7 +304,7 @@ async function mergeIMDBData(doFetch: boolean = false) {
 
     // Flag incorrect results.
     //
-    console.log('Titledata flagged as incorrect:')
+    console.log('Title data flagged as incorrect:')
     for (let filmID in json) {
       const result = json[filmID]
       if (
