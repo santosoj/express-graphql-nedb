@@ -1,7 +1,7 @@
 import express from 'express'
 import 'dotenv/config'
 import { graphqlHTTP } from 'express-graphql'
-import { buildSchema } from 'graphql'
+import { buildSchema, execute, ExecutionArgs } from 'graphql'
 
 import db, { Director, Film, OrderBy } from './data/store'
 import seed from './data/seed'
@@ -10,6 +10,11 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+
+import qDirector from './graphql/director.graphql'
+import qDirectors from './graphql/directors.graphql'
+import qFilm from './graphql/film.graphql'
+import qFilms from './graphql/films.graphql'
 
 // await seed({
 //   reset: true,
@@ -97,6 +102,9 @@ const root = {
     return await db.orderBy(db.directors.find({}), args?.orderBy)
   },
   director: async ({ _id }: IDArgs) => {
+
+    console.log(`director resolver | _id=${_id}`)
+
     return await db.directors.findOne({ _id: Number(_id) })
   },
   films: async (args?: { orderBy: OrderBy<Film> }) => {
@@ -115,6 +123,17 @@ const root = {
     return null
   },
 }
+
+const result = await execute({
+  schema,
+  document: qDirector,
+  rootValue: root,
+  variableValues: {
+    id: '23',
+  },
+})
+
+console.log(JSON.stringify(result))
 
 const app = express()
 const port = 3000

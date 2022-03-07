@@ -33,12 +33,11 @@ export default {
       },
       {
         test: /\.graphql$/,
-        exclude: /node_modules/,
-        loader: 'graphql-tag/loader',
+        type: 'asset/source'
       },
     ],
   },
-  resolve: { 
+  resolve: {
     extensions: ['.ts', '.js', '.graphql'],
   },
   experiments: { outputModule: true, topLevelAwait: true },

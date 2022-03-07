@@ -1,0 +1,5 @@
+{
+  "events": {
+    "start": "rm -rf ./node_modules/.cache/babel-loader"
+  }
+}
