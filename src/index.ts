@@ -1,3 +1,4 @@
+import cors from 'cors'
 import express from 'express'
 import 'dotenv/config'
 import { graphqlHTTP } from 'express-graphql'
@@ -138,6 +139,7 @@ console.log(JSON.stringify(result))
 const app = express()
 const port = 3000
 
+app.use(cors())
 app.use(
   '/graphql',
   graphqlHTTP({
