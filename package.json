@@ -11,7 +11,8 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "webpack",
     "build:watch": "yarn run build:types --watch & yarn run build:js --watch",
-    "start": "nodemon --watch dist dist/index.js"
+    "start": "nodemon --watch dist dist/index.js",
+    "ngrok": "ngrok http --region=au --hostname=shoopshoop.au.ngrok.io 3000"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
