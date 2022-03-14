@@ -103,9 +103,6 @@ const root = {
     return await db.orderBy(db.directors.find({}), args?.orderBy)
   },
   director: async ({ _id }: IDArgs) => {
-
-    console.log(`director resolver | _id=${_id}`)
-
     return await db.directors.findOne({ _id: Number(_id) })
   },
   films: async (args?: { orderBy: OrderBy<Film> }) => {
@@ -125,16 +122,16 @@ const root = {
   },
 }
 
-const result = await execute({
-  schema,
-  document: qDirector,
-  rootValue: root,
-  variableValues: {
-    id: '23',
-  },
-})
+// const result = await execute({
+//   schema,
+//   document: qDirector,
+//   rootValue: root,
+//   variableValues: {
+//     id: '23',
+//   },
+// })
 
-console.log(JSON.stringify(result))
+// console.log(JSON.stringify(result))
 
 const app = express()
 const port = 3000
