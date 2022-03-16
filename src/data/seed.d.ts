@@ -17,6 +17,7 @@ interface TitleData {
     writers: string;
     stars: string;
     wikipedia: {
+        url: string;
         plotShort: PlainTextHTMLField;
         plotFull: PlainTextHTMLField;
     };

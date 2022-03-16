@@ -27,6 +27,7 @@ interface TitleData {
   writers: string
   stars: string
   wikipedia: {
+    url: string
     plotShort: PlainTextHTMLField
     plotFull: PlainTextHTMLField
   }
@@ -315,6 +316,7 @@ async function mergeIMDBData(doFetch: boolean = false) {
         typeof result.directors !== 'string' ||
         typeof result.writers !== 'string' ||
         typeof result.stars !== 'string' ||
+        typeof result.wikipedia?.url !== 'string' ||
         typeof result.wikipedia?.plotShort?.plainText !== 'string' ||
         typeof result.wikipedia?.plotShort?.html !== 'string' ||
         typeof result.wikipedia?.plotFull?.plainText !== 'string' ||
@@ -340,6 +342,7 @@ async function mergeIMDBData(doFetch: boolean = false) {
             writers: result.writers,
             stars: result.stars,
             wikipedia: {
+              url: result.wikipedia.url,
               plotShort: result.wikipedia.plotShort,
               plotFull: result.wikipedia.plotFull,
             },

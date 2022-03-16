@@ -25,6 +25,8 @@ import qFilms from './graphql/films.graphql'
 //   doFetchWikipedia: false,
 // })
 
+// process.exit(0)
+
 const schema = buildSchema(`#graphql
   enum Sort {
     asc
@@ -64,6 +66,7 @@ const schema = buildSchema(`#graphql
   type FilmWikipediaSection {
     plotShort: PlainTextHTMLField!
     plotFull: PlainTextHTMLField!
+    url: String!
   }
 
   type Film {
