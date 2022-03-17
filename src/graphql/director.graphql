@@ -13,5 +13,9 @@ query director($id: ID!) {
     }
     extract
     extractHTML
+    film {
+      _id
+      title
+    }
   }
 }

@@ -4,7 +4,7 @@ import 'dotenv/config'
 import { graphqlHTTP } from 'express-graphql'
 import { buildSchema, execute, ExecutionArgs } from 'graphql'
 
-import db, { Director, Film, OrderBy } from './data/store'
+import db, { Director, Film, FilmStub, OrderBy } from './data/store'
 import seed from './data/seed'
 
 import path from 'path'
@@ -51,6 +51,11 @@ const schema = buildSchema(`#graphql
     mobile: PageURLField
   }
 
+  type FilmStub {
+    _id: ID!
+    title: String!
+  }
+
   type Director {
     _id: ID!
     name: String!
@@ -61,6 +66,7 @@ const schema = buildSchema(`#graphql
     contentURLs: ContentURLs!
     extract: String!
     extractHTML: String!
+    film: FilmStub!
   }
 
   type FilmWikipediaSection {
@@ -103,10 +109,30 @@ interface IDArgs {
 
 const root = {
   directors: async (args?: { orderBy: OrderBy<Director> }) => {
-    return await db.orderBy(db.directors.find({}), args?.orderBy)
+    const directors = await db.orderBy(db.directors.find({}), args?.orderBy)
+
+    return await directors.map(async (d) => {
+      const film = await db.films.findOne({
+        directors: { $elemMatch: d._id },
+      })
+      if (film) {
+        return { ...d, film: { _id: film._id, title: film.title } }
+      }
+      return d
+    })
   },
   director: async ({ _id }: IDArgs) => {
-    return await db.directors.findOne({ _id: Number(_id) })
+    const director = await db.directors.findOne({ _id: Number(_id) })
+    if (director) {
+      const film = await db.films.findOne({
+        directors: { $elemMatch: director._id },
+      })
+      if (film) {
+        return { ...director, film: { _id: film?._id, title: film.title } }
+      }
+      return director
+    }
+    return null
   },
   films: async (args?: { orderBy: OrderBy<Film> }) => {
     const films = await db.orderBy(db.films.find({}), args?.orderBy)
@@ -135,6 +161,7 @@ const root = {
 // })
 
 // console.log(JSON.stringify(result))
+// process.exit(0)
 
 const app = express()
 const port = 3000

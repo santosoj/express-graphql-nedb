@@ -17,6 +17,10 @@ export declare type PopulateOption<T extends {
     prop: P;
     dataStore: Datastore<Exclude<ArrayElement<T[P]>, number>>;
 };
+export declare type FilmStub = {
+    _id: number;
+    title: string;
+};
 export declare type Director = {
     _id: number;
     name: string;
@@ -32,6 +36,7 @@ export declare type Director = {
     };
     extract: string;
     extractHTML: string;
+    film: FilmStub;
 };
 export declare type Film = {
     _id: number;

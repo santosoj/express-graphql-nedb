@@ -39,6 +39,11 @@ export type PopulateOption<
   dataStore: Datastore<Exclude<ArrayElement<T[P]>, number>>
 }
 
+export type FilmStub = {
+  _id: number
+  title: string
+}
+
 export type Director = {
   _id: number
   name: string
@@ -52,6 +57,7 @@ export type Director = {
   }
   extract: string
   extractHTML: string
+  film: FilmStub
 }
 
 export type Film = {
