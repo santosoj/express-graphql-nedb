@@ -54,6 +54,7 @@ const schema = buildSchema(`#graphql
   type FilmStub {
     _id: ID!
     title: String!
+    image: String!
   }
 
   type Director {
@@ -116,7 +117,10 @@ const root = {
         directors: { $elemMatch: d._id },
       })
       if (film) {
-        return { ...d, film: { _id: film._id, title: film.title } }
+        return {
+          ...d,
+          film: { _id: film._id, title: film.title, image: film.image },
+        }
       }
       return d
     })
@@ -128,7 +132,10 @@ const root = {
         directors: { $elemMatch: director._id },
       })
       if (film) {
-        return { ...director, film: { _id: film?._id, title: film.title } }
+        return {
+          ...director,
+          film: { _id: film?._id, title: film.title, image: film.image },
+        }
       }
       return director
     }

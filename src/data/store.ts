@@ -42,6 +42,7 @@ export type PopulateOption<
 export type FilmStub = {
   _id: number
   title: string
+  image: string
 }
 
 export type Director = {

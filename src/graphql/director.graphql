@@ -16,6 +16,7 @@ query director($id: ID!) {
     film {
       _id
       title
+      image
     }
   }
 }

@@ -8,5 +8,8 @@ query directors ($order: [Sort!], $fields: [String!]) {
       _id
       title
     }
+    thumbnail {
+      source
+    }
   }
 }
