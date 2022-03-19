@@ -17,16 +17,16 @@ import qDirectors from './graphql/directors.graphql'
 import qFilm from './graphql/film.graphql'
 import qFilms from './graphql/films.graphql'
 
-await seed({
-  reset: false,
-  doMergeIMDB: false,
-  doFetchIMDB: false,
-  doMergeWikipedia: false,
-  doFetchWikipedia: false,
-  doFetchImages: true,
-})
+// await seed({
+//   reset: false,
+//   doMergeIMDB: false,
+//   doFetchIMDB: false,
+//   doMergeWikipedia: false,
+//   doFetchWikipedia: false,
+//   doFetchImages: true,
+// })
 
-process.exit(0)
+// process.exit(0)
 
 const schema = buildSchema(`#graphql
   enum Sort {
