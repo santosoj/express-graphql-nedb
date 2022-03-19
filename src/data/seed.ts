@@ -5,6 +5,8 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 import Axios, { AxiosInstance, AxiosResponse } from 'axios'
+import sharp from 'sharp'
+
 import db, { Director, Film, PageURLField, PlainTextHTMLField } from './store'
 
 const MAXINT32 = 0x7fffffff
@@ -372,6 +374,21 @@ async function fetchToFile(axios: AxiosInstance, url: string, path: string) {
   })
 }
 
+async function processImage(path: string) {
+  const fileSize = fs.statSync(path).size
+  if (fileSize > 128 * 1024) {
+    const image = sharp(path)
+    const squeeze = Math.sqrt((128 * 1024) / fileSize)
+    const { width, height } = await image.metadata()
+    if (width && height) {
+      const newWidth = Math.trunc(squeeze * width)
+      const newHeight = Math.trunc(squeeze * height)
+      await image.resize(newWidth, newHeight).jpeg({ quality: 75 }).toFile(path + '.new')
+      fs.rename(path + '.new', path, () => {})
+    }
+  }
+}
+
 async function fetchImages() {
   const axios = Axios.create()
   const imports: String[] = [
@@ -387,14 +404,10 @@ async function fetchImages() {
     i++
     console.log(`Fetching film image ${i}/${nfilms}...`)
     const paddedID = film._id.toString().padStart(2, '0')
-    const fileName = `film_${paddedID}${film.image
-      .slice(-4)
-      .toLowerCase()}`
-    await fetchToFile(
-      axios,
-      film.image,
-      __dirname + process.env.IMAGE_DIRECTORY + `/${fileName}`
-    )
+    const fileName = `film_${paddedID}${film.image.slice(-4).toLowerCase()}`
+    const filePath = __dirname + process.env.IMAGE_DIRECTORY + `/${fileName}`
+    await fetchToFile(axios, film.image, filePath)
+    await processImage(filePath)
     imports.push(`import Film_${paddedID} from './${fileName}'`)
   }
 
@@ -408,14 +421,17 @@ async function fetchImages() {
     if (director.thumbnail) {
       console.log(`Fetching director image ${i}/${ndirectors}...`)
 
-      const fileName = `director_${paddedID}${director.thumbnail.source.slice(-4).toLowerCase()}`
+      const fileName = `director_${paddedID}${director.thumbnail.source
+        .slice(-4)
+        .toLowerCase()}`
+      const filePath = __dirname + process.env.IMAGE_DIRECTORY + `/${fileName}`
       await fetchToFile(
         axios,
         director.thumbnail.source,
-        __dirname + process.env.IMAGE_DIRECTORY + `/${fileName}`
+        filePath
       )
+      await processImage(filePath)
       imports.push(`import Director_${paddedID} from './${fileName}'`)
-
     } else {
       console.log(`Skipping director ${i}/${ndirectors} (no thumbnail source)`)
       skippedDirectors.push(i)
@@ -425,7 +441,7 @@ async function fetchImages() {
   imports.push('')
   imports.push(`export const FilmImages: ImageSourcePropType[] = [`)
   imports.push('  undefined,')
-  for (i=1; i<=nfilms; i++) {
+  for (i = 1; i <= nfilms; i++) {
     imports.push(`  Film_${i.toString().padStart(2, '0')},`)
   }
   imports.push(']')
@@ -433,7 +449,7 @@ async function fetchImages() {
   imports.push('')
   imports.push(`export const DirectorImages: ImageSourcePropType[] = [`)
   imports.push('  undefined,')
-  for (i=1; i<=ndirectors; i++) {
+  for (i = 1; i <= ndirectors; i++) {
     if (skippedDirectors.includes(i)) {
       imports.push('  PersonPlaceholder,')
     } else {
