@@ -374,38 +374,80 @@ async function fetchToFile(axios: AxiosInstance, url: string, path: string) {
 
 async function fetchImages() {
   const axios = Axios.create()
+  const imports: String[] = [
+    `import { ImageSourcePropType } from 'react-native'`,
+    '',
+    `import PersonPlaceholder from '../../graphics/personPlaceholder.png'`,
+    '',
+  ]
 
   const nfilms = await db.films.count({})
   let i = 0
   for (let film of await db.films.find({})) {
     i++
     console.log(`Fetching film image ${i}/${nfilms}...`)
+    const paddedID = film._id.toString().padStart(2, '0')
+    const fileName = `film_${paddedID}${film.image
+      .slice(-4)
+      .toLowerCase()}`
     await fetchToFile(
       axios,
       film.image,
-      __dirname +
-        process.env.IMAGE_DIRECTORY +
-        `/film_${film._id.toString().padStart(2, '0')}`
+      __dirname + process.env.IMAGE_DIRECTORY + `/${fileName}`
     )
+    imports.push(`import Film_${paddedID} from './${fileName}'`)
   }
 
+  imports.push('')
   const ndirectors = await db.directors.count({})
+  const skippedDirectors: number[] = []
   i = 0
   for (let director of await db.directors.find({})) {
     i++
+    const paddedID = director._id.toString().padStart(2, '0')
     if (director.thumbnail) {
       console.log(`Fetching director image ${i}/${ndirectors}...`)
+
+      const fileName = `director_${paddedID}${director.thumbnail.source.slice(-4).toLowerCase()}`
       await fetchToFile(
         axios,
         director.thumbnail.source,
-        __dirname +
-          process.env.IMAGE_DIRECTORY +
-          `/director_${director._id.toString().padStart(2, '0')}`
+        __dirname + process.env.IMAGE_DIRECTORY + `/${fileName}`
       )
+      imports.push(`import Director_${paddedID} from './${fileName}'`)
+
     } else {
       console.log(`Skipping director ${i}/${ndirectors} (no thumbnail source)`)
+      skippedDirectors.push(i)
     }
   }
+
+  imports.push('')
+  imports.push(`export const FilmImages: ImageSourcePropType[] = [`)
+  imports.push('  undefined,')
+  for (i=1; i<=nfilms; i++) {
+    imports.push(`  Film_${i.toString().padStart(2, '0')},`)
+  }
+  imports.push(']')
+
+  imports.push('')
+  imports.push(`export const DirectorImages: ImageSourcePropType[] = [`)
+  imports.push('  undefined,')
+  for (i=1; i<=ndirectors; i++) {
+    if (skippedDirectors.includes(i)) {
+      imports.push('  PersonPlaceholder,')
+    } else {
+      imports.push(`  Director_${i.toString().padStart(2, '0')},`)
+    }
+  }
+  imports.push(']')
+
+  const importsFile = __dirname + process.env.IMAGE_DIRECTORY + '/index.ts'
+  console.log(`Writing imports to '${importsFile}'`)
+
+  const importsFlat = imports.join('\n')
+
+  fs.writeFileSync(importsFile, importsFlat)
 }
 
 export interface SeedOptions {
