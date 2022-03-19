@@ -18,11 +18,12 @@ import qFilm from './graphql/film.graphql'
 import qFilms from './graphql/films.graphql'
 
 // await seed({
-//   reset: true,
-//   doMergeIMDB: true,
+//   reset: false,
+//   doMergeIMDB: false,
 //   doFetchIMDB: false,
-//   doMergeWikipedia: true,
+//   doMergeWikipedia: false,
 //   doFetchWikipedia: false,
+//   doFetchImages: true,
 // })
 
 // process.exit(0)

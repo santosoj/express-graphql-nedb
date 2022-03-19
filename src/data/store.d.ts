@@ -20,6 +20,7 @@ export declare type PopulateOption<T extends {
 export declare type FilmStub = {
     _id: number;
     title: string;
+    image: string;
 };
 export declare type Director = {
     _id: number;

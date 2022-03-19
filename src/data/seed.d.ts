@@ -47,6 +47,7 @@ export interface SeedOptions {
     doFetchIMDB: boolean;
     doMergeWikipedia: boolean;
     doFetchWikipedia: boolean;
+    doFetchImages: boolean;
 }
-declare function seed({ reset, doMergeIMDB, doFetchIMDB, doMergeWikipedia, doFetchWikipedia, }: SeedOptions): Promise<void>;
+declare function seed({ reset, doMergeIMDB, doFetchIMDB, doMergeWikipedia, doFetchWikipedia, doFetchImages, }: SeedOptions): Promise<void>;
 export default seed;

@@ -355,12 +355,66 @@ async function mergeIMDBData(doFetch: boolean = false) {
   }
 }
 
+async function fetchToFile(axios: AxiosInstance, url: string, path: string) {
+  const writer = fs.createWriteStream(path)
+
+  const res = await axios({
+    url,
+    method: 'GET',
+    responseType: 'stream',
+  })
+
+  res.data.pipe(writer)
+
+  return new Promise((resolve, reject) => {
+    writer.on('finish', resolve)
+    writer.on('error', reject)
+  })
+}
+
+async function fetchImages() {
+  const axios = Axios.create()
+
+  const nfilms = await db.films.count({})
+  let i = 0
+  for (let film of await db.films.find({})) {
+    i++
+    console.log(`Fetching film image ${i}/${nfilms}...`)
+    await fetchToFile(
+      axios,
+      film.image,
+      __dirname +
+        process.env.IMAGE_DIRECTORY +
+        `/film_${film._id.toString().padStart(2, '0')}`
+    )
+  }
+
+  const ndirectors = await db.directors.count({})
+  i = 0
+  for (let director of await db.directors.find({})) {
+    i++
+    if (director.thumbnail) {
+      console.log(`Fetching director image ${i}/${ndirectors}...`)
+      await fetchToFile(
+        axios,
+        director.thumbnail.source,
+        __dirname +
+          process.env.IMAGE_DIRECTORY +
+          `/director_${director._id.toString().padStart(2, '0')}`
+      )
+    } else {
+      console.log(`Skipping director ${i}/${ndirectors} (no thumbnail source)`)
+    }
+  }
+}
+
 export interface SeedOptions {
   reset: boolean
   doMergeIMDB: boolean
   doFetchIMDB: boolean
   doMergeWikipedia: boolean
   doFetchWikipedia: boolean
+  doFetchImages: boolean
 }
 
 async function seed({
@@ -369,6 +423,7 @@ async function seed({
   doFetchIMDB,
   doMergeWikipedia,
   doFetchWikipedia,
+  doFetchImages,
 }: SeedOptions): Promise<void> {
   if (reset) {
     await db.reset()
@@ -402,6 +457,10 @@ async function seed({
 
   if (doMergeWikipedia) {
     await mergeWikipediaData(doFetchWikipedia)
+  }
+
+  if (doFetchImages) {
+    await fetchImages()
   }
 }
 
