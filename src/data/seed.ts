@@ -89,10 +89,8 @@ class APIClient {
       if (res.status === 200) {
         return res.data
       }
-      console.log(`response.status=${res.status} (${res.statusText})`)
       return null
     } catch (ex) {
-      console.log(ex)
       return null
     }
   }
@@ -374,19 +372,36 @@ async function fetchToFile(axios: AxiosInstance, url: string, path: string) {
   })
 }
 
-async function processImage(path: string) {
-  const fileSize = fs.statSync(path).size
-  if (fileSize > 128 * 1024) {
-    const image = sharp(path)
-    const squeeze = Math.sqrt((128 * 1024) / fileSize)
-    const { width, height } = await image.metadata()
-    if (width && height) {
-      const newWidth = Math.trunc(squeeze * width)
-      const newHeight = Math.trunc(squeeze * height)
-      await image.resize(newWidth, newHeight).jpeg({ quality: 75 }).toFile(path + '.new')
-      fs.rename(path + '.new', path, () => {})
+async function processImage(filePath: string): Promise<string> {
+  const fileSize = fs.statSync(filePath).size
+  const extension = path.extname(filePath).toLowerCase()
+
+  const doResize = fileSize > 128 * 1024
+  const doConvert = !['.jpg', '.png'].includes(extension)
+
+  let importedFilePath = filePath
+  if (doResize || doConvert) {
+    const image = sharp(filePath)
+    if (doResize) {
+      const squeeze = Math.sqrt((128 * 1024) / fileSize)
+      const { width, height } = await image.metadata()
+      if (width && height) {
+        const newWidth = Math.trunc(squeeze * width)
+        const newHeight = Math.trunc(squeeze * height)
+        await image.resize(newWidth, newHeight).jpeg({ quality: 75 }).toFile(filePath + '.new')
+      }
+    } else if (doConvert) {
+      await image.jpeg({ quality: 75 }).toFile(filePath + '.new')
+    }
+
+    fs.rename(filePath + '.new', filePath, () => {})
+    if (doConvert) {
+      importedFilePath = filePath.slice(0, -extension.length) + '.jpg'
+      fs.rename(filePath, importedFilePath, () => {})
     }
   }
+
+  return path.basename(importedFilePath)
 }
 
 async function fetchImages() {
@@ -407,8 +422,8 @@ async function fetchImages() {
     const fileName = `film_${paddedID}${film.image.slice(-4).toLowerCase()}`
     const filePath = __dirname + process.env.IMAGE_DIRECTORY + `/${fileName}`
     await fetchToFile(axios, film.image, filePath)
-    await processImage(filePath)
-    imports.push(`import Film_${paddedID} from './${fileName}'`)
+    const importedFileName = await processImage(filePath)
+    imports.push(`import Film_${paddedID} from './${importedFileName}'`)
   }
 
   imports.push('')
@@ -430,8 +445,8 @@ async function fetchImages() {
         director.thumbnail.source,
         filePath
       )
-      await processImage(filePath)
-      imports.push(`import Director_${paddedID} from './${fileName}'`)
+      const importedFileName = await processImage(filePath)
+      imports.push(`import Director_${paddedID} from './${importedFileName}'`)
     } else {
       console.log(`Skipping director ${i}/${ndirectors} (no thumbnail source)`)
       skippedDirectors.push(i)
