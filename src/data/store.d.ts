@@ -1,12 +1,6 @@
 import Datastore from 'nedb-promises';
+import { Director, Film } from 'uncanon-types';
 declare type ArrayElement<ArrayType extends readonly unknown[]> = ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
-export declare type PageURLField = {
-    page: string;
-};
-export declare type PlainTextHTMLField = {
-    plainText: string;
-    html: string;
-};
 export interface OrderBy<T> {
     order?: ('asc' | 'desc')[];
     fields?: (keyof T & string)[];
@@ -16,45 +10,6 @@ export declare type PopulateOption<T extends {
 }, P extends keyof T> = {
     prop: P;
     dataStore: Datastore<Exclude<ArrayElement<T[P]>, number>>;
-};
-export declare type FilmStub = {
-    _id: number;
-    title: string;
-    image: string;
-};
-export declare type Director = {
-    _id: number;
-    name: string;
-    lexKey: string;
-    birthYear: number;
-    deathYear?: number;
-    thumbnail?: {
-        source: string;
-    };
-    contentURLs: {
-        desktop: PageURLField;
-        mobile: PageURLField;
-    };
-    extract: string;
-    extractHTML: string;
-    film: FilmStub;
-};
-export declare type Film = {
-    _id: number;
-    title: string;
-    directors: number[] | Director[];
-    year: number;
-    imdbID: string;
-    originalTitle: string;
-    image: string;
-    plot: string;
-    directorsText: string;
-    writers: string;
-    stars: string;
-    wikipedia: {
-        plotShort: PlainTextHTMLField;
-        plotFull: PlainTextHTMLField;
-    };
 };
 declare type CursorType = any;
 interface DB {

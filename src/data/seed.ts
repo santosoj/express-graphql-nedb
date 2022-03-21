@@ -7,9 +7,9 @@ const __dirname = path.dirname(__filename)
 import Axios, { AxiosInstance, AxiosResponse } from 'axios'
 import sharp from 'sharp'
 
-import db, { Director, Film, PageURLField, PlainTextHTMLField } from './store'
+import db from './store'
 
-const MAXINT32 = 0x7fffffff
+import { Director, Film, MAXINT32, PageURLField, PlainTextHTMLField } from 'uncanon-types'
 
 interface SearchMovieData {
   results: {
@@ -137,7 +137,7 @@ export async function mergeWikipediaData(doFetch: boolean = false) {
         try {
           const result = await client.summary(`${director.name}`)
           if (result) {
-            summaryResults[director._id] = result
+            summaryResults[Number(director._id)] = result
           }
         } catch (ex) {
           console.log(ex)
@@ -227,7 +227,7 @@ async function mergeIMDBData(doFetch: boolean = false) {
         try {
           const result = await client.searchMovie(`${film.title} ${film.year}`)
           if (result) {
-            searchMovieResults[film._id] = result
+            searchMovieResults[Number(film._id)] = result
           }
         } catch (ex) {
           console.log(ex)
@@ -280,7 +280,7 @@ async function mergeIMDBData(doFetch: boolean = false) {
         try {
           const result = await client.title(film.imdbID)
           if (result) {
-            titleResults[film._id] = result
+            titleResults[Number(film._id)] = result
           }
         } catch (ex) {
           console.log(ex)

@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
-import { PlainTextHTMLField } from './store';
+import { PlainTextHTMLField } from 'uncanon-types';
 interface SearchMovieData {
     results: {
         id: string;

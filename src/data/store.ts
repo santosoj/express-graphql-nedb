@@ -6,6 +6,8 @@ const __dirname = path.dirname(__filename)
 
 import Datastore from 'nedb-promises'
 
+import { Director, Film } from 'uncanon-types'
+
 type Databases = 'directors' | 'films'
 
 const PERSISTENCE_FILE: { [name in Databases]: string } = {
@@ -16,15 +18,6 @@ const PERSISTENCE_FILE: { [name in Databases]: string } = {
 
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never
-
-export type PageURLField = {
-  page: string
-}
-
-export type PlainTextHTMLField = {
-  plainText: string
-  html: string
-}
 
 export interface OrderBy<T> {
   order?: ('asc' | 'desc')[]
@@ -37,46 +30,6 @@ export type PopulateOption<
 > = {
   prop: P
   dataStore: Datastore<Exclude<ArrayElement<T[P]>, number>>
-}
-
-export type FilmStub = {
-  _id: number
-  title: string
-  image: string
-}
-
-export type Director = {
-  _id: number
-  name: string
-  lexKey: string
-  birthYear: number
-  deathYear?: number
-  thumbnail?: { source: string }
-  contentURLs: {
-    desktop: PageURLField
-    mobile: PageURLField
-  }
-  extract: string
-  extractHTML: string
-  film: FilmStub
-}
-
-export type Film = {
-  _id: number
-  title: string
-  directors: number[] | Director[]
-  year: number
-  imdbID: string
-  originalTitle: string
-  image: string
-  plot: string
-  directorsText: string
-  writers: string
-  stars: string
-  wikipedia: {
-    plotShort: PlainTextHTMLField
-    plotFull: PlainTextHTMLField
-  }
 }
 
 type CursorType = any // protectionist nedb-promises

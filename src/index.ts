@@ -4,7 +4,8 @@ import 'dotenv/config'
 import { graphqlHTTP } from 'express-graphql'
 import { buildSchema, execute, ExecutionArgs } from 'graphql'
 
-import db, { Director, Film, FilmStub, OrderBy } from './data/store'
+import db, { OrderBy } from './data/store'
+import { Director, Film, FilmStub } from 'uncanon-types'
 import seed from './data/seed'
 
 import path from 'path'
