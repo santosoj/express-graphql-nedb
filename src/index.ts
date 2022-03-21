@@ -3,13 +3,11 @@ import 'dotenv/config'
 import express from 'express'
 import { graphqlHTTP } from 'express-graphql'
 import { buildSchema } from 'graphql'
-import path from 'path'
 import { Director, Film } from 'uncanon-types'
 import { fileURLToPath } from 'url'
 import db, { OrderBy } from './data/store'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 
 // await seed({
 //   reset: false,
@@ -152,18 +150,6 @@ const root = {
     return null
   },
 }
-
-// const result = await execute({
-//   schema,
-//   document: qDirector,
-//   rootValue: root,
-//   variableValues: {
-//     id: '23',
-//   },
-// })
-
-// console.log(JSON.stringify(result))
-// process.exit(0)
 
 const app = express()
 const port = 3000
