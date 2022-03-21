@@ -1,14 +1,7 @@
+import Axios, { AxiosInstance, AxiosResponse } from 'axios'
 import fs from 'fs'
 import path from 'path'
-import { fileURLToPath } from 'url'
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-import Axios, { AxiosInstance, AxiosResponse } from 'axios'
 import sharp from 'sharp'
-
-import db from './store'
-
 import {
   Director,
   Film,
@@ -16,6 +9,10 @@ import {
   PageURLField,
   PlainTextHTMLField,
 } from 'uncanon-types'
+import { fileURLToPath } from 'url'
+import db from './store'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 interface SearchMovieData {
   results: {

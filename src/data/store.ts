@@ -1,12 +1,10 @@
 import fs from 'fs'
+import Datastore from 'nedb-promises'
 import path from 'path'
+import { Director, Film } from 'uncanon-types'
 import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-
-import Datastore from 'nedb-promises'
-
-import { Director, Film } from 'uncanon-types'
 
 type Databases = 'directors' | 'films'
 

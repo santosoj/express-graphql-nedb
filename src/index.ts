@@ -1,22 +1,15 @@
 import cors from 'cors'
-import express from 'express'
 import 'dotenv/config'
+import express from 'express'
 import { graphqlHTTP } from 'express-graphql'
-import { buildSchema, execute, ExecutionArgs } from 'graphql'
-
-import db, { OrderBy } from './data/store'
-import { Director, Film, FilmStub } from 'uncanon-types'
-import seed from './data/seed'
-
+import { buildSchema } from 'graphql'
 import path from 'path'
+import { Director, Film } from 'uncanon-types'
 import { fileURLToPath } from 'url'
+import db, { OrderBy } from './data/store'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-
-import qDirector from './graphql/director.graphql'
-import qDirectors from './graphql/directors.graphql'
-import qFilm from './graphql/film.graphql'
-import qFilms from './graphql/films.graphql'
 
 // await seed({
 //   reset: false,
