@@ -9,7 +9,13 @@ import sharp from 'sharp'
 
 import db from './store'
 
-import { Director, Film, MAXINT32, PageURLField, PlainTextHTMLField } from 'uncanon-types'
+import {
+  Director,
+  Film,
+  MAXINT32,
+  PageURLField,
+  PlainTextHTMLField,
+} from 'uncanon-types'
 
 interface SearchMovieData {
   results: {
@@ -388,7 +394,10 @@ async function processImage(filePath: string): Promise<string> {
       if (width && height) {
         const newWidth = Math.trunc(squeeze * width)
         const newHeight = Math.trunc(squeeze * height)
-        await image.resize(newWidth, newHeight).jpeg({ quality: 75 }).toFile(filePath + '.new')
+        await image
+          .resize(newWidth, newHeight)
+          .jpeg({ quality: 75 })
+          .toFile(filePath + '.new')
       }
     } else if (doConvert) {
       await image.jpeg({ quality: 75 }).toFile(filePath + '.new')
@@ -440,11 +449,7 @@ async function fetchImages() {
         .slice(-4)
         .toLowerCase()}`
       const filePath = __dirname + process.env.IMAGE_DIRECTORY + `/${fileName}`
-      await fetchToFile(
-        axios,
-        director.thumbnail.source,
-        filePath
-      )
+      await fetchToFile(axios, director.thumbnail.source, filePath)
       const importedFileName = await processImage(filePath)
       imports.push(`import Director_${paddedID} from './${importedFileName}'`)
     } else {

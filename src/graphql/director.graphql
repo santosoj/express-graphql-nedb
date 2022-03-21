@@ -8,8 +8,12 @@ query director($id: ID!) {
       source
     }
     contentURLs {
-      desktop { page }
-      mobile { page }
+      desktop {
+        page
+      }
+      mobile {
+        page
+      }
     }
     extract
     extractHTML

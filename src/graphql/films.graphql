@@ -1,5 +1,5 @@
-query films ($order: [Sort!], $fields: [String!]) {
-  films(orderBy: {order: $order, fields: $fields}) {
+query films($order: [Sort!], $fields: [String!]) {
+  films(orderBy: { order: $order, fields: $fields }) {
     title
     year
     directors {

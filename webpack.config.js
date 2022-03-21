@@ -33,7 +33,7 @@ export default {
       },
       {
         test: /\.graphql$/,
-        type: 'asset/source'
+        type: 'asset/source',
       },
     ],
   },
